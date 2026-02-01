@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geoportal Palmeras - CIP FP La Torreta</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="logo-torreta.png" alt="CIP FP La Torreta" class="logo">
+                <div class="title-section">
+                    <h1>Geoportal de Palmeras</h1>
+                    <p>CIP FP La Torreta - Elche, Alicante</p>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <!-- Mapa -->
+    <div id="map"></div>
+
+    <!-- Panel Lateral -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            
+            <!-- Sección Capas -->
+            <section class="panel-section">
+                <h2 class="section-title">
+                    <span class="icon">🗂️</span>
+                    Capas
+                </h2>
+                <div id="capas-lista" class="capas-container">
+                    <p class="loading">Cargando capas...</p>
+                </div>
+            </section>
+
+            <!-- Sección Reportar Incidencia -->
+            <section class="panel-section">
+                <h2 class="section-title">
+                    <span class="icon">⚠️</span>
+                    Reportar Incidencia
+                </h2>
+                <form id="form-incidencia" class="form">
+                    <div class="form-group">
+                        <label for="nombre-usuario">Tu nombre</label>
+                        <input type="text" id="nombre-usuario" placeholder="Nombre completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-incidencia">Tipo de incidencia</label>
+                        <select id="tipo-incidencia" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="fuga riego">🚰 Fuga de riego</option>
+                            <option value="planta dañada">🌱 Planta dañada</option>
+                            <option value="plaga detectada">🐛 Plaga detectada</option>
+                            <option value="caída ramas">🌿 Caída de ramas</option>
+                            <option value="caída palmas">🌴 Caída de palmas</option>
+                            <option value="riesgo detectado">⚠️ Riesgo detectado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fecha-deteccion">¿Cuándo detectaste la incidencia?</label>
+                        <input type="date" id="fecha-deteccion" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comentarios">Comentarios (opcional)</label>
+                        <textarea id="comentarios" placeholder="Describe la incidencia..." rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="obtenerUbicacion()">
+                                📍 Usar GPS
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="activarClickMapa()">
+                                🗺️ Marcar en mapa
+                            </button>
+                        </div>
+                        <div id="coordenadas-info" class="info-box"></div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="reportarIncidencia()">
+                        Reportar Incidencia
+                    </button>
+                </form>
+            </section>
+
+            <!-- Sección Buscar por Sexo -->
+            <section class="panel-section">
+                <h2 class="section-title">
+                    <span class="icon">🔍</span>
+                    Buscar por Sexo
+                </h2>
+                <div class="form-group">
+                    <select id="sexo-select">
+                        <option value="">Seleccionar sexo...</option>
+                        <option value="Hembra">♀️ Hembra</option>
+                        <option value="Macho">♂️ Macho</option>
+                        <option value="Hermafrodita">⚥ Hermafrodita</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" onclick="buscarPorSexo()">Buscar</button>
+                <div id="resultado-busqueda" class="result-box"></div>
+            </section>
+
+            <!-- Sección Análisis por Sexo -->
+            <section class="panel-section">
+                <h2 class="section-title">
+                    <span class="icon">📊</span>
+                    Análisis por Sexo
+                </h2>
+                <div class="form-group">
+                    <select id="capa-select">
+                        <option value="">Seleccionar capa...</option>
+                        <option value="copia49">copia49</option>
+                        <option value="copia113">copia113</option>
+                        <option value="nueva181">nueva181</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" onclick="analizarSexo()">Analizar</button>
+                <div id="resultado-sexo" class="result-box"></div>
+            </section>
+
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>
